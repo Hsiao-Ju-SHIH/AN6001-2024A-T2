@@ -7,8 +7,8 @@ import textblob
 import google.generativeai as genai
 import os
 
-api = 'AIzaSyC56T9cwh1Voqaw0H7DykFsTfLtX2DzUQw'
-# api = os.getenv('makersuite')
+# api = 'AIzaSyC56T9cwh1Voqaw0H7DykFsTfLtX2DzUQw'
+api = os.getenv('makersuite')
 
 app = Flask(__name__)
 
