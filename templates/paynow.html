@@ -1,26 +1,24 @@
 <head>
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"
-
+    <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
 </head>
-
 <body>
     <div class="container">
         <h2>Transfer Money</h2>
-        <h2>Ethereum DApp </h2>
         <input type="text" id="payer" placeholder="Enter payer address">
         <input type="text" id="payee" placeholder="Enter payee address">
         <input type="number" id="amount" placeholder="Enter amount to transfer">
+        
         <button class="btn" onclick="transfer()">Transfer</button>
         <button class="btn" onclick="transaction()">Transaction</button>
         <form action="/main" method="post">
             <p><input type="submit" value="Main"></p>
         </form>
-
+        
         <p id="view_payer"></p>
         <p id="view_payee"></p>
         <p id="view_amount"></p>
+        
         <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
         <script>
             const contractAddress = "0xf1cbbd359c0f0fb5287af2e5a19db3a6d0422086";
@@ -79,6 +77,7 @@
         ];
             const web3 = new Web3(Web3.givenProvider);
             const contract = new web3.eth.Contract(contractABI, contractAddress);
+        
             async function transfer() {
                 const accounts = await web3.eth.requestAccounts();
                 const payer = document.getElementById('payer').value;
@@ -89,8 +88,10 @@
                 console.log("accounts[0] " + accounts[0]);
                 await contract.methods.weixin(payer, payee,amount).send({ from: accounts[0]});
             }
+        
             async function transaction() {
-                const result = await contract.methods.check_transaction().call();
+                const result = await contract.methods.view_transaction().call();
+        
                 document.getElementById('view_payer').innerText = "Payer: " + result[0];
                 document.getElementById('view_payee').innerText = "Payee: " + result[1];
                 document.getElementById('view_amount').innerText = "Amount: " + result[2];
